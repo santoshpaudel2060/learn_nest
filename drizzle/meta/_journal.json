@@ -15,6 +15,20 @@
       "when": 1788241955215,
       "tag": "0001_strong_scarlet_witch",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788253878951,
+      "tag": "0002_great_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788254561738,
+      "tag": "0003_quick_namorita",
+      "breakpoints": true
     }
   ]
 }
