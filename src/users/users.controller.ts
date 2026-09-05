@@ -1,7 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { registerUserDto } from './dto/register-user.dto.js';
 import { loginUserDto } from './dto/login-user.dto.js';
+import { UpdateUserDto } from './dto/update-user.dto.js';
 import {
   ApiConflictResponse,
   ApiOperation,
@@ -26,8 +36,13 @@ export class UsersController {
   }
 
   @Get(':id')
-  findById(id: number) {
+  findById(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findById(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateUserDto) {
+    return this.usersService.update(id, data);
   }
 
   @Post('register')
@@ -64,7 +79,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Delete a user',
   })
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(Number(id));
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.remove(id);
   }
 }

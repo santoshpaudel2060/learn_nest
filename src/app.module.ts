@@ -5,6 +5,8 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { DbModule } from './db/db.module.js';
 import { UsersModule } from './users/users.module.js';
+import { PostsModule } from './posts/posts.module.js';
+import { CommentsModule } from './comments/comments.module.js';
 
 @Module({
   imports: [
@@ -15,6 +17,10 @@ import { UsersModule } from './users/users.module.js';
     DbModule,
 
     UsersModule,
+
+    PostsModule,
+
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

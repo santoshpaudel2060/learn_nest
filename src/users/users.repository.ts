@@ -13,7 +13,7 @@ export class UserRepository {
   }
 
   findById(id: number) {
-    return this.db.select().from(users).where(eq(users.id, id));
+    return this.db.select().from(users).where(eq(users.id, id)).limit(1);
   }
 
   create(data: { name: string; email: string; password: string }) {
@@ -21,8 +21,13 @@ export class UserRepository {
   }
 
   findByEmail(email: string) {
-    return this.db.select().from(users).where(eq(users.email, email));
+    return this.db.select().from(users).where(eq(users.email, email)).limit(1);
   }
+
+  update(id: number, data: { name?: string; email?: string }) {
+    return this.db.update(users).set(data).where(eq(users.id, id)).returning();
+  }
+
   delete(id: number) {
     return this.db.delete(users).where(eq(users.id, id)).returning();
   }

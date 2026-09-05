@@ -8,6 +8,7 @@ import { UserRepository } from './users.repository.js';
 import { createUserDto } from './dto/create-user.dto.js';
 import * as bcrypt from 'bcryptjs';
 import { loginUserDto } from './dto/login-user.dto.js';
+import { UpdateUserDto } from './dto/update-user.dto.js';
 
 @Injectable()
 export class UsersService {
@@ -18,10 +19,22 @@ export class UsersService {
   }
 
   async findById(id: number) {
-    const user = await this.usersRepository.findById(id);
+    const [user] = await this.usersRepository.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    return user;
+  }
+
+  async update(id: number, data: UpdateUserDto) {
+    await this.findById(id);
+    if (data.email) {
+      const existingUser = await this.usersRepository.findByEmail(data.email);
+      if (existingUser.length > 0 && existingUser[0].id !== id) {
+        throw new ConflictException('User with this email already exists');
+      }
+    }
+    const [user] = await this.usersRepository.update(id, data);
     return user;
   }
 
